@@ -121,16 +121,17 @@ function ResponsiveDrawer(props) {
           {navs}
         </Drawer>
       </Box>
-      <div className="bg-blue-100 h-full  w-full">
+      <div className="bg-blue-100 h-full w-full">
         <AppBar
           position="fixed"
           sx={{
             width: { sm: `calc(100% - ${drawerWidth}px)` },
-            ml: { sm: `${drawerWidth}px` },
             color: "black",
             boxShadow: "0",
             bgcolor: "#DBEAFE",
-            pt:1
+            pt:1,
+            pl:5,
+            pr:2
           }}
         >
           <Toolbar
@@ -160,7 +161,7 @@ function ResponsiveDrawer(props) {
             </div>
           </Toolbar>
         </AppBar>
-        <div className="mt-10 pt-20">
+        <div className="mt-10 mx-16 pt-20">
           <Outlet />
         </div>
       </div>
