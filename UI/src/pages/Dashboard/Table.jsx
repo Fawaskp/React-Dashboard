@@ -21,60 +21,60 @@ export default function CustomizedTables() {
   }, []);
 
   return (
-    <div className="w-3/5 relative overflow-x-auto">
-      <table className="w-full text-sm text-left rtl:text-right text-gray-900 shadow-md sm:rounded-lg overflow-hidden">
-        <thead className="font-extrabold text-gray-900 bg-gray-50 ">
+    <div className="min-w-[20rem] w-full md:flex-grow overflow-x-auto py-2">
+      <table className="w-full text-sm text-left rtl:text-right text-gray-900 shadow-md overflow-hidden rounded-lg">
+        <thead className="font-poppins text-gray-900 bg-gray-50">
           <tr>
-            <th
-              scope="col"
-              className="ps-5 pe-12 py-5 border-r border-gray-300"
-            >
+            <th scope="col" className="ps-5 pe-3 py-5 border-r border-gray-300">
               Id
             </th>
             <th
               scope="col"
-              className="ps-5 pe-12 py-5 border-r border-gray-300"
+              className="ps-5 py-5 border-r border-gray-300"
             >
               Name
             </th>
             <th
               scope="col"
-              className="ps-5 pe-12 py-5 border-r border-gray-300"
+              className="ps-5 py-5 border-r border-gray-300"
             >
               Quantity
             </th>
-            <th scope="col" className="ps-5 pe-12 py-5">
+            <th scope="col" className="ps-5 py-5">
               Price
             </th>
           </tr>
         </thead>
         <tbody>
           {tableData.map((row) => (
-            <tr className={`${row.id % 2 == 0 ? "bg-white" : "bg-gray-100"}`}>
-              <td className="ps-5 pe-32 py-3 border-r border-y border-gray-300">
-                {row.id}
-              </td>
-              <td className="ps-5 pe-32 py-3 border-r border-y border-gray-300">
-                {row.name}
-              </td>
-              <td className="ps-5 pe-32 py-3 border-r border-y border-gray-300">
+            <tr
+            key={row.name}
+              className={`${
+                row.id % 2 === 0 ? "bg-white" : "bg-gray-100"
+              } border-y border-gray-300`}
+            >
+              <td className="ps-5  py-2 border-r border-gray-300">{row.id}</td>
+              <td className="ps-5 py-2 border-r border-gray-300">{row.name}</td>
+              <td className="ps-5 py-2 border-r border-gray-300">
                 {row.quantity}
               </td>
-              <td className="ps-5 pe-32 py-3 border-y border-gray-300">
-                {row.price}
-              </td>
+              <td className="ps-5 py-2">{row.price}</td>
             </tr>
           ))}
         </tbody>
       </table>
-      <div className="flex justify-center mt-4" >
+      <div className="flex justify-center mt-4">
         <Pagination
           sx={{
             "& button": {
               backgroundColor: "white",
             },
             "& .Mui-selected": {
-              backgroundColor: "white",
+              backgroundColor: "#fff",
+              border: "2px solid black",
+            },
+            "& .Mui-selected:hover": {
+              backgroundColor: "lightgray",
               border: "2px solid black",
             },
             "& button:hover": {

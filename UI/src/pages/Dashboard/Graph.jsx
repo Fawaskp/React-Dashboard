@@ -63,26 +63,22 @@ function Graph() {
   };
 
   return (
-    <div className="py-3 w-[40rem]">
+    <div className="ms-2 sm:ms-0 py-3 md:w-[47rem] flex-grow">
       <Line
-        className="bg-white p-6 rounded-lg shadow-md h-full"
+        className="bg-white p-2 sm:p-6 rounded-lg shadow-md h-full"
         data={data}
         options={{
+          maintainAspectRatio:false,
+          responsive:true,
           scales: {
             y: {
               beginAtZero: true,
               grace: 5,
-            },
-          },
-          plugins: {
-            title: {
-              display: true,
-              text: "Average Rainfall per month",
-              fontSize: 20,
-            },
-            legend: {
-              display: true,
-              position: "right",
+              ticks: {
+                font: {
+                  size: 12,
+                },
+              },
             },
           },
         }}

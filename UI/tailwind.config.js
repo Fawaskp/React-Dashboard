@@ -5,7 +5,16 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['Montserrat', 'sans-serif'],
+        holtwood: ['Holtwood One SC', 'serif'],
+        poppins: ['Poppins', 'sans-serif']
+      },
+      width: {
+        '95pt': '95%'
+      }
+    },
   },
   plugins: [],
 }
