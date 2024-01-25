@@ -1,7 +1,11 @@
-import React from "react";
+import Pie from "./Pie";
 
 function Dashboard() {
-  return <div>Dashboard</div>;
+  return (
+    <div>
+      <Pie />
+    </div>
+  );
 }
 
 export default Dashboard;
