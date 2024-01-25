@@ -32,7 +32,7 @@ function Pie() {
   }, []);
 
   return (
-    <div>
+    <div className="!w-full md:w-96" >
       <PieChart
         series={[
           {
