@@ -86,7 +86,7 @@ function Graph() {
   return (
     <div className="relative md:ms-2 sm:ms-0 py-3 w-full sm:max-w-[20rem] md:max-w-[45rem] md:h-[30rem] flex-grow justify-center">
       {xAxisData.length < 1 && (
-        <div className="absolute flex justify-center items-center w-full sm:h-[28.5rem] top-1/2 transform -translate-y-1/2 dark:bg-gray-700 dark:bg-opacity-90 bg-gray-200 bg-opacity-60  dark:border-gray-500 border rounded-lg">
+        <div className="absolute flex justify-center items-center w-full h-[10.5rem] sm:h-[28.5rem] top-1/2 transform -translate-y-1/2 dark:bg-gray-700 dark:bg-opacity-90 bg-gray-200 bg-opacity-60  dark:border-gray-500 border rounded-lg">
           {error ? (
             <div className="text-red-500">
               <h1 className="text-sm font-extrabold">{error}</h1>

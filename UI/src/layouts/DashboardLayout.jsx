@@ -174,7 +174,7 @@ export default function SideBar() {
                   />
                 </div>
               </div>
-              <span className="mx-5" >
+              <span className="sm:mx-5" >
                 <MaterialUISwitch
                   size="small"
                   checked={colorTheme == "light" ? true : false}
