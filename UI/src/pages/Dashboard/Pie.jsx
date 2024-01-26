@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { PieChart } from "@mui/x-charts/PieChart";
 import { axiosInstance } from "../../utils/axios";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
 
 function Pie() {
   const [piedata, setPieData] = useState([]);
+  const [error, setError] = useState(null);
+  const [pieWidth] = useState(Math.max(150, window.innerWidth / 8 + 20));
 
   const addColorShades = (data) => {
     const generateShade = (index) => {
@@ -25,10 +24,17 @@ function Pie() {
     axiosInstance
       .get("/api/pie-chart")
       .then((response) => {
+        setError(null);
         setPieData(addColorShades(response.data));
-        console.log(response.data);
       })
-      .catch((err) => {});
+      .catch((err) => {
+        console.log("Err-> ", err);
+        if (err.message) {
+          setError(err.message);
+        } else {
+          setError("Something went wrong!");
+        }
+      });
   };
 
   useEffect(() => {
@@ -36,36 +42,64 @@ function Pie() {
   }, []);
 
   return (
-    <div className="overflow-hidden rounded-xl p-4 mt-3 shadow-md bg-white mx-3 flex flex-col items-center">
-      <PieChart
-        sx={{ padding: "10px" }}
-        slotProps={{
-          legend: { hidden: true },
-        }}
-        series={[
-          {
-            data: piedata,
-            highlightScope: { faded: "global", highlighted: "item" },
-            faded: { innerRadius: 30, additionalRadius: -30, color: "gray" },
-          },
-        ]}
-        height={200}
-        width={250}
-        margin={{ right: 0, left: 0 }}
-      />
-      <div className="w-full flex flex-col items-center md:items-start">
-        {piedata.map((item, index) => {
-          return (
-            <div className="flex my-1.5 md:ms-10" key={"legend" + index}>
-              <div
-                className="w-3 h-3 rounded-full overflow-hidden"
-                style={{ background: item.color }}
-              />
-              <p className="font-bold mx-2 text-xs">{item.label}</p>
+    <div
+      className={`relative overflow-hidden rounded-lg my-3 flex-grow shadow-md dark:bg-gray-800 bg-white ms-3 md:ms-10 me-5 flex flex-col items-center ${
+        piedata.length == 0 ? "p-20" : "p-4"
+      }`}
+    >
+      {piedata.length < 1 ? (
+        <div className="absolute flex justify-center items-center w-full h-[28.5rem] top-1/2 transform -translate-y-1/2 dark:bg-gray-700 dark:bg-opacity-90 dark:border-gray-500 bg-gray-200 bg-opacity-60 p-10  border rounded-lg">
+          {error ? (
+            <div className="text-red-500">
+              <h1 className="text-sm font-extrabold">{error}</h1>
+              <p
+                onClick={fetchPieData}
+                className="text-center dark:text-white text-black text-xs cursor-pointer hover:underline"
+              >
+                Try again
+              </p>
             </div>
-          );
-        })}
-      </div>
+          ) : (
+            <h1 className="font-extrabold">No Data to Show</h1>
+          )}
+        </div>
+      ) : (
+        <>
+          <PieChart
+            sx={{ padding: "10px" }}
+            slotProps={{
+              legend: { hidden: true },
+            }}
+            series={[
+              {
+                data: piedata,
+                highlightScope: { faded: "global", highlighted: "item" },
+                faded: {
+                  innerRadius: 30,
+                  additionalRadius: -30,
+                  color: "gray",
+                },
+              },
+            ]}
+            height={pieWidth}
+            width={pieWidth}
+            margin={{ right: 0, left: 0 }}
+          />
+          <div className="dark:text-white w-full flex flex-col items-center md:items-start">
+            {piedata.map((item, index) => {
+              return (
+                <div className="flex my-1.5 md:ms-10" key={"legend" + index}>
+                  <div
+                    className="w-3 h-3 rounded-full overflow-hidden"
+                    style={{ background: item.color }}
+                  />
+                  <p className="font-bold mx-2 text-xs">{item.label}</p>
+                </div>
+              );
+            })}
+          </div>
+        </>
+      )}
     </div>
   );
 }

@@ -1,7 +1,6 @@
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -9,7 +8,6 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
-import { Outlet, useNavigate } from "react-router-dom";
 import DashboardIcon from "../assets/Circled Menu.png";
 import SupportIcon from "../assets/Support.png";
 import PluginsIcon from "../assets/Puzzle.png";
@@ -18,8 +16,11 @@ import SunIcon from "../assets/Sun.gif";
 import MaleUser from "../assets/Rectangle 10.png";
 import Briefcase from "../assets/Briefcase.png";
 import LogoutIcon from "../assets/Shutdown.png";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { Button } from "@mui/material";
+import useDarkTheme from "../utils/useDarkTheme";
+import MaterialUISwitch from "../components/ThemeToggleSwitch";
 
 const drawerWidth = 240;
 
@@ -29,6 +30,7 @@ export default function SideBar() {
   const currentPath = location.pathname;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
+  const [colorTheme, setTheme] = useDarkTheme();
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -80,8 +82,7 @@ export default function SideBar() {
   );
 
   return (
-    <div className="flex" sx={{ display: "flex" }}>
-      <CssBaseline />
+    <div className="flex">
       <Box
         component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
@@ -131,14 +132,14 @@ export default function SideBar() {
           </Button>
         </Drawer>
       </Box>
-      <div className="bg-blue-100 h-full w-full">
+      <div className="dark:bg-gray-700 bg-blue-100 h-full w-full">
         <AppBar
+          className="dark:!bg-gray-700 !bg-blue-100"
           position="fixed"
           sx={{
             width: { sm: `calc(100% - ${drawerWidth}px)` },
             color: "black",
             boxShadow: "0",
-            bgcolor: "#DBEAFE",
             pt: 1,
             px: 2,
           }}
@@ -151,22 +152,39 @@ export default function SideBar() {
               padding: 0,
             }}
           >
-            <div className="flex items-center w-full sm:w-fit sm:gap-0 flex-wrap">
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                edge="start"
-                onClick={handleDrawerToggle}
-                sx={{ display: { sm: "none" } }}
-              >
-                <MenuIcon />
-              </IconButton>
-              <div className="flex flex-wrap">
-                <h1>Good Morning!</h1>
-                <img className="ms-1 w-6" src={SunIcon} alt="Sun Gif" />
+            <div className="flex justify-between w-full md:w-auto" >
+              <div className="flex items-center w-full sm:w-fit sm:gap-0 flex-wrap">
+                <IconButton
+                  color="inherit"
+                  aria-label="open drawer"
+                  edge="start"
+                  onClick={handleDrawerToggle}
+                  sx={{ display: { sm: "none" } }}
+                >
+                  <MenuIcon />
+                </IconButton>
+                <div className="flex flex-wrap">
+                  <h1 className="font-bold dark:text-white text-sm sm:text-base md:text-lg">
+                    Good Morning!
+                  </h1>
+                  <img
+                    className="ms-1 w-5 sm:w-7"
+                    src={SunIcon}
+                    alt="Sun Gif"
+                  />
+                </div>
               </div>
+              <span className="mx-5" >
+                <MaterialUISwitch
+                  size="small"
+                  checked={colorTheme == "light" ? true : false}
+                  onChange={() =>
+                    setTheme(colorTheme == "dark" ? "dark" : "light")
+                  }
+                />
+              </span>
             </div>
-            <div className="rounded-lg bg-white shadow-md m-2 w-full justify-between sm:w-fit p-2 flex items-center">
+            <div className="rounded-lg dark:bg-gray-800 dark:text-white bg-white shadow-md m-2 w-full justify-between sm:w-fit p-2 flex items-center">
               <div className="mx-1 sm:mx-2 font-semibold">
                 <p className="text-xs">John Doe</p>
                 <p style={{ fontSize: "0.65rem" }}>john@doe.com</p>
@@ -175,7 +193,7 @@ export default function SideBar() {
             </div>
           </Toolbar>
         </AppBar>
-        <div className="md:ps-16 md:pe-16 lg:me-0 pt-28 sm:pt-20 w-95pt md:max-w-md lg:max-w-6xl xl:max-w-7xl">
+        <div className="mx-auto sm:mx-0 md:ps-16 md:pe-16 lg:me-0 pt-28 sm:pt-20 w-95pt md:max-w-md lg:max-w-6xl xl:max-w-7xl">
           <Outlet />
         </div>
       </div>
